@@ -41,6 +41,9 @@ def submit():
 
   return render_template('success.html', data=event)
 
+@app.route('/snapshots', methods=['GET'])
+def snapshots():
+  
 
 if __name__ == '__main__':  #python interpreter assigns "__main__" to the file you run
   app.run(debug=True)
