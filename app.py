@@ -54,12 +54,13 @@ def submit():
 
 @app.route('/snapshots')
 def snapshots():
-  snapshotResult=db.session.execute(db.select(Snapshot)).scalars
+  #return [4,4,4]
+  snapshotResult=db.session.execute(db.select(Snapshot)).scalars()
   x = []
   for result in snapshotResult:
     x.append( (result.id, result.time, result.event, result.trigger))
-
-  return json.dumps(x)
+  print(x)
+  return x
 
 
 class Camera(db.Model):
