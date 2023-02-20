@@ -8,8 +8,12 @@ from tables.users import User
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:huihui27@localhost/snapshots'
-db=SQLAlchemy(app)
+app.config['SQLALCHEMY_BINDS']= {
+  "cameras": 'postgresql://postgres:huihui27@localhost/cameras',
+  "users": 'postgresql://postgres:huihui27@localhost/users',
+}
 
+db=SQLAlchemy(app)
 
 
 class Snapshot(db.Model):
@@ -42,7 +46,6 @@ def submit():
 
   #debugging
   snapshotResult=db.session.execute(db.select(Snapshot)).scalars()
-  
   for result in snapshotResult:
     print(result.event)
 
@@ -51,23 +54,19 @@ def submit():
 
 @app.route('/snapshots')
 def snapshots():
-  return json.dumps(db.session.execute(db.select(Snapshot)).scalars())
+  snapshotResult=db.session.execute(db.select(Snapshot)).scalars
+  x = []
+  for result in snapshotResult:
+    x.append( (result.id, result.time, result.event, result.trigger))
+
+  return json.dumps(x)
 
 
-
-app2 = Flask(__name__)
-app2.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:huihui27@localhost/cameras'
-app3 = Flask(__name__)
-app3.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:huihui27@localhost/cameras'
-
-
-db__cameras=SQLAlchemy(app2)
-db__users=SQLAlchemy(app3)
-
-class Camera(db__cameras.Model):
+class Camera(db.Model):
+  __bind_key__ = "cameras"
   __tablename__='cameras'
-  id=db.Column(db__cameras.Integer,primary_key=True)
-  location=db.Column(db__cameras.String(40))
+  id=db.Column(db.Integer, primary_key=True)
+  location=db.Column(db.String(40))
 
   def __init__(self,location):
     self.location = location
@@ -75,7 +74,7 @@ class Camera(db__cameras.Model):
 
 @app.route('/cameras')
 def cameras():
-  return db.session.execute(db__cameras.select(Camera)).scalars()
+  return db.session.execute(db.select(Camera)).scalars()
 
 @app.route('/users')
 def users():
