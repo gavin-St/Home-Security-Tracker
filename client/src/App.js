@@ -4,19 +4,27 @@ function App() {
     const [data, setData] = useState([{}])
 
     useEffect(() => {
-        fetch("/submit").then(
+        fetch("/snapshots").then(
             res => res.json()
         ).then(
             data => {
-                setData(data);
-                console.log(data);
+                setData(data)
+                console.log(data)
             }
         )
     }, [])
 
     return (
             <div>
-                <p>hi</p>
+                {(typeof data.members === 'undefined') ? (
+                    <p>Loading...</p>
+                ) : (
+                    data.members.map((member,i) => (
+                        <p>key={i}{member}</p> 
+                    ))
+                )
+            
+            }
             </div>
     )
 }

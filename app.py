@@ -1,3 +1,5 @@
+import json
+
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
@@ -49,7 +51,7 @@ def submit():
 
 @app.route('/snapshots')
 def snapshots():
-  return db.session.execute(db.select(Snapshot)).scalars()
+  return json.dumps(db.session.execute(db.select(Snapshot)).scalars())
 
 
 
