@@ -7,8 +7,8 @@ app.config['SQLALCHEMY_DATABASE_URI']='postgresql://postgres:huihui27@localhost/
 
 db=SQLAlchemy(app)
 
-class Student(db.Model):
-  __tablename__='students'
+class Snapshot(db.Model):
+  __tablename__='snapshots'
   id=db.Column(db.Integer,primary_key=True)
   time=db.Column(db.String(40))
   event=db.Column(db.String(40))
@@ -30,12 +30,12 @@ def submit():
   event=request.form['event']
   trigger=request.form['trigger']
 
-  student=Student(time,event,trigger)
-  db.session.add(student)
+  snapshot=Snapshot(time,event,trigger)
+  db.session.add(snapshot)
   db.session.commit()
 
-  #fetch a certain student2
-  studentResult=db.session.query(Student).filter(Student.id==1)
+  #fetch a snapshot
+  studentResult=db.session.query(Snapshot).filter(Snapshot.id==1)
   for result in studentResult:
     print(result.event)
 
