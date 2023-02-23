@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { NavBar } from "./components/NavBar";
+import { Video } from "./components/Video";
+import { SnapshotSubmit } from "./components/SnapshotSubmit";
+import { Snapshots } from "./components/Snapshots";
+import { Users } from "./components/Users";
+
 
 function App() {
     const [data, setData] = useState([{}])
@@ -15,17 +21,24 @@ function App() {
     }, [])
 
     return (
-            <div>
-                {(typeof data === 'undefined') ? (
-                    <p>Loading...</p>
-                ) : (
-                    data.map((member,i) => (
-                        <p>key={i}   {member[1]} {member[2]}</p> 
-                    ))
-                )
-            
-            }
-            </div>
+        <div>
+            <NavBar />
+            <Video />
+            <SnapshotSubmit />
+            <Snapshots />
+            <Users />
+                <div>
+                    {(typeof data === 'undefined') ? (
+                        <p>Loading...</p>
+                    ) : (
+                        data.map((member,i) => (
+                            <p>key={i}   {member[1]} {member[2]}</p> 
+                        ))
+                    )
+                
+                }
+                </div>
+        </div>
     )
 }
 
