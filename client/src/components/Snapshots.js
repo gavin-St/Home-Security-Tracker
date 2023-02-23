@@ -17,14 +17,14 @@ export default function Snapshots() {
 
     return (
         <div>
-        {(typeof data === 'undefined') ? (
-            <p>Loading...</p>
-        ) : (
-            data.map((member,i) => (
-                <p>key={i}   {member[1]} {member[2]}</p> 
-            ))
-        )
-        }
+            {(typeof data === 'undefined') ? (
+                <p>Loading...</p>
+            ) : (
+                data.map((member,i) => (
+                    <p className="logs">key={i}   {member[1]} {member[2]}</p> 
+                ))
+            )
+            }
         </div>
     )
 }
