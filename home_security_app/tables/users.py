@@ -1,4 +1,4 @@
-from extensions import db 
+from home_security_app.extensions import db 
 
 class recognizedFace():
   __bind_key__ = "faces"

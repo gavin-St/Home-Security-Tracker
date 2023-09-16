@@ -1,4 +1,4 @@
-from extensions import db 
+from home_security_app.extensions import db 
 
 class Camera(db.Model):
   __bind_key__ = "cameras"
