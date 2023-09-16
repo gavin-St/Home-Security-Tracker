@@ -1,3 +1,5 @@
+from extensions import db 
+
 class recognizedFace():
   __bind_key__ = "faces"
   __tablename__='faces'
